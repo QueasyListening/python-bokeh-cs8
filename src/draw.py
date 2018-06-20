@@ -7,8 +7,9 @@ from bokeh.palettes import Spectral8
 from graph import *
 
 graph_data = Graph()
-graph_data.debug_create_test_data()
-
+##graph_data.debug_create_test_data()
+graph_data.randomize(3, 3)
+graph_data.BFS()
 N = len(graph_data.vertexes)
 
 for i, vertex in enumerate(graph_data.vertexes):
@@ -27,11 +28,7 @@ graph = GraphRenderer()
 
 graph.node_renderer.data_source.add(node_indices, 'index')
 graph.node_renderer.data_source.add(color_list, 'color')
-graph.node_renderer.glyph = Oval(height=10, width=10, fill_color='color')
-
-# graph.edge_renderer.data_source.data = dict(
-#     start=[0]*N,
-#     end=node_indices)
+graph.node_renderer.glyph = Oval(height=CIRCLE_SIZE, width=CIRCLE_SIZE, fill_color='color')
 
 ###this is drawing the edges from start to end
 edge_start=[]
@@ -48,13 +45,11 @@ graph.edge_renderer.data_source.data = dict(
 ### start of layout code
 x = [v.pos['x'] for v in graph_data.vertexes]
 y = [v.pos['y'] for v in graph_data.vertexes]
-vertex_values = []
-for vertex in graph_data.vertexes:
-    vertex_values.append(vertex.value)
+vertex_values = [v.value for v in graph_data.vertexes]
 
 source = ColumnDataSource(data=dict(x_pos=x, y_pos=y, values=vertex_values))
 
-labels = LabelSet(x='x_pos', y='y_pos', text='values', level='glyph', x_offset=5, y_offset=5, source=source, render_mode='canvas')
+labels = LabelSet(x='x_pos', y='y_pos', text='values', level='glyph', x_offset=-5, y_offset=-7, source=source, render_mode='canvas')
 
 graph_layout = dict(zip(node_indices, zip(x, y)))
 graph.layout_provider = StaticLayoutProvider(graph_layout=graph_layout)

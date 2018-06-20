@@ -1,3 +1,7 @@
+import random
+from bokeh.palettes import Spectral9
+CIRCLE_SIZE=35
+
 class Edge:
     def __init__(self, destination):
         self.destination = destination
@@ -28,5 +32,47 @@ class Graph:
 
         edge3 = Edge(debug_vertex_5)
         debug_vertex_4.edges.append(edge3)
-        
+
         self.vertexes += [debug_vertex_1, debug_vertex_2, debug_vertex_3, debug_vertex_4, debug_vertex_5]
+
+    def randomize(self, width, height, probability=40):
+        def connect_verts(v0, v1):
+            v0.edges.append(Edge(v1))
+            v1.edges.append(Edge(v0))
+
+        random.seed()
+
+        count = 0
+        #Build a grid of verts
+        grid = []
+        row = []
+        for j in range(height):
+            for i in range(width):
+                row.append(Vertex('t' + str(count), x=random.randrange(CIRCLE_SIZE, 500 - CIRCLE_SIZE, 1), y=random.randrange(CIRCLE_SIZE, 500 - CIRCLE_SIZE, 1)))
+                count += 1
+            grid.append(row)
+            row = []
+
+        for j, r in enumerate(grid):
+            for i, vert in enumerate(r):
+                if (random.randrange(100) < probability and j < height - 1):
+                    connect_verts(vert, grid[j+1][i])
+                if (random.randrange(100) < probability and i < width - 1):
+                    connect_verts(vert, grid[j][i+1])
+                self.vertexes.append(vert)
+
+    def BFS(self):
+        to_be_checked = []
+        for vertex in self.vertexes:
+            if (vertex.color == 'white'):
+                #color = [random.randrange(254), random.randrange(255), random.randrange(255)]
+                color = Spectral9.pop()
+                vertex.color = color
+                to_be_checked.append(vertex)
+                count = 0
+                while(len(to_be_checked) > 0):
+                    v = to_be_checked.pop(0)
+                    for edge in v.edges:
+                        if (edge.destination.color == 'white'):
+                            to_be_checked.append(edge.destination)
+                            edge.destination.color = color

@@ -21,8 +21,14 @@ color_list = []
 for vertex in graph_data.vertexes:
     color_list.append(vertex.color)
 
-plot = figure(title='Graph Layout Demonstration', x_range=(0, 500), y_range=(0, 500),
-              tools='', toolbar_location=None)
+plot = figure(x_range=(0, WIDTH), y_range=(0, HEIGHT),
+              tools='', toolbar_location=None, plot_width=WIDTH, plot_height=HEIGHT)
+#plot.xgrid.grid_line_color = None
+plot.grid.grid_line_color = None
+plot.axis.visible = False
+plot.outline_line_color = None
+plot.toolbar.logo = None
+plot.toolbar_location = None
 
 graph = GraphRenderer()
 
@@ -49,7 +55,7 @@ vertex_values = [v.value for v in graph_data.vertexes]
 
 source = ColumnDataSource(data=dict(x_pos=x, y_pos=y, values=vertex_values))
 
-labels = LabelSet(x='x_pos', y='y_pos', text='values', level='glyph', x_offset=-5, y_offset=-7, source=source, render_mode='canvas')
+labels = LabelSet(x='x_pos', y='y_pos', text='values', level='glyph', x_offset=-6, y_offset=-8, source=source, render_mode='canvas')
 
 graph_layout = dict(zip(node_indices, zip(x, y)))
 graph.layout_provider = StaticLayoutProvider(graph_layout=graph_layout)

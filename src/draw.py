@@ -8,7 +8,7 @@ from graph import *
 
 graph_data = Graph()
 ##graph_data.debug_create_test_data()
-graph_data.randomize(3, 3)
+graph_data.randomize(4, 3)
 graph_data.BFS()
 N = len(graph_data.vertexes)
 
@@ -22,7 +22,7 @@ for vertex in graph_data.vertexes:
     color_list.append(vertex.color)
 
 plot = figure(x_range=(0, WIDTH), y_range=(0, HEIGHT),
-              tools='', toolbar_location=None, plot_width=WIDTH, plot_height=HEIGHT)
+              tools='', toolbar_location=None, plot_width=WIDTH, plot_height=HEIGHT, background_fill_color='gray')
 #plot.xgrid.grid_line_color = None
 plot.grid.grid_line_color = None
 plot.axis.visible = False
@@ -55,7 +55,7 @@ vertex_values = [v.value for v in graph_data.vertexes]
 
 source = ColumnDataSource(data=dict(x_pos=x, y_pos=y, values=vertex_values))
 
-labels = LabelSet(x='x_pos', y='y_pos', text='values', level='glyph', x_offset=-6, y_offset=-8, source=source, render_mode='canvas')
+labels = LabelSet(x='x_pos', y='y_pos', text='values', level='glyph', x_offset=-9, y_offset=-8, source=source, render_mode='canvas')
 
 graph_layout = dict(zip(node_indices, zip(x, y)))
 graph.layout_provider = StaticLayoutProvider(graph_layout=graph_layout)

@@ -1,7 +1,7 @@
 import random
 from bokeh.palettes import Spectral8, Set3, Paired
 CIRCLE_SIZE=35
-WIDTH=750
+WIDTH=800
 HEIGHT=600
 class Edge:
     def __init__(self, destination):
@@ -45,7 +45,7 @@ class Graph:
         ## Method for generating random verts based on JS Graphs project
         #Build a grid of verts
         box_buffer = .8
-        px_box = 150
+        px_box = 200
         box_inner = px_box * box_buffer
         box_inner_offset = (px_box - box_inner) / 2
         grid = []
@@ -73,13 +73,12 @@ class Graph:
 
         #New and improved method for generating random verts
         # N = height * width
+        # count = 0
         # for i in range(N):
-        #     if (width % (i + 1) == 0):
-        #         j+=1
-        #     self.vertexes.append(Vertex('t' + str(i), 
+        #     self.vertexes.append(Vertex('t' + str(count), 
         #     x=random.randrange(CIRCLE_SIZE//2, WIDTH - CIRCLE_SIZE//2, 1), 
         #     y=random.randrange(CIRCLE_SIZE//2, HEIGHT - CIRCLE_SIZE//2, 1)))
-
+        #     count += 0
         # for vertex in self.vertexes:
         #     if (random.randrange(100) < probability):
         #         connect_verts(vertex, self.vertexes[random.randrange(N-1)])
@@ -90,7 +89,6 @@ class Graph:
         to_be_checked = []
         for vertex in self.vertexes:
             if (vertex.color == 'white'):
-                #color = Spectral8.pop()
                 r = random.randrange(11)
                 while (r > len(Set3[12]) - 1):
                     r = random.randrange(11)
